@@ -22,9 +22,11 @@ async def main(interaction: discord.Interaction, searchterm: str):
             if total > 10:
                 break
             total += 1
+            server_description = f"on **{MARNE.MAPS.get(server.get('mapName', '').split('/')[-1], server.get('mapName', ''))}** with **{server.get('currentPlayers', 0)}/{server.get('maxPlayers', 0)}** players, **{MARNE.MODES.get(server.get('gameMode', ''), server.get('gameMode', ''))}**\n"
+            server_description += f"[More info](https://gametools.network/servers/bf1marne/gameid/{server.get('id')}/pc)"
             embed.add_field(
                 name=server.get("name"),
-                value=f"on **{MARNE.MAPS.get(server.get('mapName', '').split('/')[-1], server.get('mapName', ''))}** with **{server.get('currentPlayers', 0)}/{server.get('maxPlayers', 0)}** players, **{MARNE.MODES.get(server.get('gameMode', ''), server.get('gameMode', ''))}**\n",
+                value=server_description,
                 inline=False,
             )
     # footer
