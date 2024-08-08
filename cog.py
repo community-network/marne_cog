@@ -5,17 +5,21 @@ from discord import app_commands
 from . import server_list, player_list
 
 
-class Bf1Marne(commands.GroupCog, name="marne"):
+class Bf1Marne(commands.Cog, name="marne"):
     """Battlefield 1 Marne"""
 
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
         super().__init__()
 
-    @app_commands.command(
+    group = app_commands.Group(name="marne", description="Battlefield 1 Marne cog")
+    group.allowed_installs = app_commands.AppInstallationType(guild=True, user=True)
+    
+    @group.command(
         name="serverlist",
         description="List all the servers based on a searchterm for Battlefield 1 marne.",
     )
+    @app_commands.user_install()
     async def serverlist(
         self, interaction: discord.Interaction, servername: str
     ) -> None:
@@ -31,10 +35,11 @@ class Bf1Marne(commands.GroupCog, name="marne"):
         )
         await interaction.followup.send(embed=embed)
 
-    @app_commands.command(
+    @group.command(
         name="playerlist",
         description="Get playerlist of the server in Battlefield 1 marne.",
     )
+    @app_commands.user_install()
     async def playerlist(
         self, interaction: discord.Interaction, servername: str
     ) -> None:
